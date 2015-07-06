@@ -21,7 +21,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-$security_checks = [
+function disabled_functions()
+{
+    static $disabled_fn;
+    if ($disabled_fn === null) {
+        $df = ini_get('disable_functions');
+        $shfb = ini_get('suhosin.executor.func.blacklist');
+        $fn_list = array_map('trim', explode(',', "$df,$shfb"));
+        $disabled_fn = array_filter($fn_list, create_function('$value', 'return $value !== "";'));
+    }
+    return $disabled_fn;
+}
+
+$security_checks = array(
     'Loaded Extensions' => function () {
         return implode(', ', get_loaded_extensions());
     },
@@ -40,8 +52,26 @@ $security_checks = [
     },
     'Can view /etc/shadow' => function () {
         return !is_readable('/etc/shadow');
+    },
+    'Shell via "system" command' => function () {
+        return !is_callable('system') && !in_array('system', disabled_functions());
+    },
+    'Shell via "shell_exec" command' => function () {
+        return !is_callable('shell_exec') && !in_array('shell_exec', disabled_functions());
+    },
+    'Shell via "exec" command' => function () {
+        return !is_callable('exec') && !in_array('exec', disabled_functions());
+    },
+    'Shell via "passthru" command' => function () {
+        return !is_callable('passthru') && !in_array('passthru', disabled_functions());
+    },
+    'Shell via "proc_open" command' => function () {
+        return !is_callable('proc_open') && !in_array('proc_open', disabled_functions());
+    },
+    'Shell via "popen" command' => function () {
+        return !is_callable('popen') && !in_array('popen', disabled_functions());
     }
-];
+);
 
 echo '<pre>';
 foreach ($security_checks as $security_check => $func) {

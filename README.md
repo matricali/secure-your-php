@@ -15,4 +15,10 @@ Running platform Linux
 safe_mode VULNERABLE
 Can view /etc/passwd VULNERABLE
 Can view /etc/shadow PASSED
+Shell via "system" command VULNERABLE
+Shell via "shell_exec" command VULNERABLE
+Shell via "exec" command VULNERABLE
+Shell via "passtrhu" command PASSED
+Shell via "proc_open" command VULNERABLE
+Shell via "popen" command VULNERABLE
 ```
