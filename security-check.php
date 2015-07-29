@@ -72,11 +72,50 @@ $security_checks = array(
         return !is_callable('popen') && !in_array('popen', disabled_functions());
     }
 );
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Secure your PHP v0.1</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+  <div class="container">
+      <h1 class="page-header">Secure your PHP v0.1</h1>
+      <div class="table-responsive">
+          <table class="table table-bordered" border="1">
+              <thead><tr><th>Check</th><th>Status</th></tr></thead>
+              <tbody>
+              <?php
+              foreach ($security_checks as $security_check => $func) {
+                  if (is_callable($func)) {
+                      $ret = $func();
+                      echo '<tr><td>', $security_check, '</td>';
+                      echo '<td>';
+                      if (!$ret) {
+                          echo '<i class="glyphicon glyphicon-remove"></i> <span class="text-danger">VULNERABLE</span>';
+                      } elseif ($ret === true) {
+                          echo '<i class="glyphicon glyphicon-ok"></i> <span class="text-success">PASSED</span>';
+                      } else {
+                          echo $ret;
+                      }
+                      echo '</td></tr>';
+                  }
+              }
+              ?>
+              </tbody>
+          </table>
+      </div>
+  </div>
 
-echo '<pre>';
-foreach ($security_checks as $security_check => $func) {
-    if (is_callable($func)) {
-        $ret = $func();
-        echo $security_check, ' ', !$ret ? 'VULNERABLE' : ($ret === true ? 'PASSED' : $ret), PHP_EOL;
-    }
-}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
