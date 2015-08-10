@@ -21,6 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
+ini_set('display_errors', 1);
+
 function disabled_functions()
 {
     static $disabled_fn;
@@ -39,12 +41,28 @@ $security_checks = array(
     },
     'Running platform' => function () {
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            return 'This is a server using Windows!';
+            return 'You\'re running PHP under Windows!';
         } else {
             return PHP_OS;
         }
     },
+    'PHP Version' => function () {
+        return phpversion();
+    },
+    'Version check' => function () {
+        return version_compare(phpversion(), '5.3.10', '>');
+    },
+    'PHP configuration file' => function () {
+        if ($ini_file = php_ini_loaded_file()) {
+            return $ini_file;
+        }
+        return 'No configuration file has been loaded.';
+    },
     'safe_mode' => function () {
+        if (version_compare(phpversion(), '5.3.0', '>')) {
+            // safe_mode has been declared as OBSOLETE since 5.3.0 and DELETED from 5.4.0
+            return true;
+        }
         return ini_get('safe_mode');
     },
     'Can view /etc/passwd' => function () {
@@ -54,22 +72,22 @@ $security_checks = array(
         return !is_readable('/etc/shadow');
     },
     'Shell via "system" command' => function () {
-        return !is_callable('system') && !in_array('system', disabled_functions());
+        return in_array('system', disabled_functions()) || !is_callable('system');
     },
     'Shell via "shell_exec" command' => function () {
-        return !is_callable('shell_exec') && !in_array('shell_exec', disabled_functions());
+        return in_array('shell_exec', disabled_functions()) || !is_callable('shell_exec');
     },
     'Shell via "exec" command' => function () {
-        return !is_callable('exec') && !in_array('exec', disabled_functions());
+        return in_array('exec', disabled_functions()) || !is_callable('exec');
     },
     'Shell via "passthru" command' => function () {
-        return !is_callable('passthru') && !in_array('passthru', disabled_functions());
+        return in_array('passthru', disabled_functions()) || !is_callable('passthru');
     },
     'Shell via "proc_open" command' => function () {
-        return !is_callable('proc_open') && !in_array('proc_open', disabled_functions());
+        return in_array('proc_open', disabled_functions()) || !is_callable('proc_open');
     },
     'Shell via "popen" command' => function () {
-        return !is_callable('popen') && !in_array('popen', disabled_functions());
+        return in_array('popen', disabled_functions()) || !is_callable('popen');
     }
 );
 ?>
