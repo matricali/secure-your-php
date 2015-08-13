@@ -71,23 +71,34 @@ $security_checks = array(
     'Can view /etc/shadow' => function () {
         return !is_readable('/etc/shadow');
     },
-    'Shell via "system" command' => function () {
+    'Command execution via "system" function' => function () {
         return in_array('system', disabled_functions()) || !is_callable('system');
     },
-    'Shell via "shell_exec" command' => function () {
+    'Command execution via "shell_exec" function' => function () {
         return in_array('shell_exec', disabled_functions()) || !is_callable('shell_exec');
     },
-    'Shell via "exec" command' => function () {
+    'Command execution via "exec" function' => function () {
         return in_array('exec', disabled_functions()) || !is_callable('exec');
     },
-    'Shell via "passthru" command' => function () {
+    'Command execution via "passthru" function' => function () {
         return in_array('passthru', disabled_functions()) || !is_callable('passthru');
     },
-    'Shell via "proc_open" command' => function () {
+    'Command execution via "proc_open" function' => function () {
         return in_array('proc_open', disabled_functions()) || !is_callable('proc_open');
     },
-    'Shell via "popen" command' => function () {
+    'Command execution via "popen" function' => function () {
         return in_array('popen', disabled_functions()) || !is_callable('popen');
+    },
+    'Kill unix processes via "posix_kill" function' => function () {
+        return in_array('posix_kill', disabled_functions()) || !is_callable('posix_kill');
+    },
+    'Remote file inclusion via "file_get_contents" function' => function () {
+        $g = @file_get_contents('http://google.com/');
+        return empty($g);
+    },
+    'Remote file inclusion via "include" statement' => function () {
+        $g = @include('http://google.com/');
+        return empty($g);
     }
 );
 ?>
