@@ -114,6 +114,19 @@ $security_checks = array(
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+    .footer {
+        text-align: center;
+        padding-top: 1.5rem;
+        color: #777;
+        border-top: .05rem solid #e5e5e5;
+        padding-bottom: 2em;
+    }
+    .footer-icons {
+        top: 4px;
+        position: relative;
+    }
+    </style>
 </head>
 <body>
   <div class="container">
@@ -142,9 +155,24 @@ $security_checks = array(
               </tbody>
           </table>
       </div>
+      <footer class="footer">
+        Secure your PHP v0.1 <span class="text-muted">&copy; Copyright 2015 Jorge Matricali</span> -
+        <span class="footer-icons">
+            <!-- Place this tag where you want the button to render. -->
+            <a class="github-button" href="https://github.com/jorge-matricali/secure-your-php" data-icon="octicon-star" data-show-count="true" aria-label="Star jorge-matricali/secure-your-php on GitHub">Star</a>
+            <!-- Place this tag where you want the button to render. -->
+            <a class="github-button" href="https://github.com/jorge-matricali/secure-your-php/fork" data-icon="octicon-repo-forked" data-show-count="true" aria-label="Fork jorge-matricali/secure-your-php on GitHub">Fork</a>
+            <!-- Place this tag where you want the button to render. -->
+            <a class="github-button" href="https://github.com/jorge-matricali/secure-your-php/issues" data-icon="octicon-issue-opened" data-show-count="true" aria-label="Issue jorge-matricali/secure-your-php on GitHub">Issue</a>
+            <!-- Place this tag where you want the button to render. -->
+            <a class="github-button" href="https://github.com/jorge-matricali/secure-your-php/archive/master.zip" data-icon="octicon-cloud-download" aria-label="Download jorge-matricali/secure-your-php on GitHub">Download</a>
+        </span>
+      </footer>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>
 </html>
