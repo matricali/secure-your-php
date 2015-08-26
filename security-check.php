@@ -46,6 +46,9 @@ $security_checks = array(
             return PHP_OS;
         }
     },
+    'Webserver software' => function () {
+        return $_SERVER['SERVER_SOFTWARE'];
+    },
     'PHP Version' => function () {
         return phpversion();
     },
@@ -89,6 +92,10 @@ $security_checks = array(
     'Command execution via "popen" function' => function () {
         return in_array('popen', disabled_functions()) || !is_callable('popen');
     },
+    'Command execution via "preg_replace" function' => function () {
+        // The "e" modifier has been decalres as OBSOLETE since 5.5.0
+        return empty(@preg_replace("/.*/e","`pwd`", ""));
+    } ,
     'Kill unix processes via "posix_kill" function' => function () {
         return in_array('posix_kill', disabled_functions()) || !is_callable('posix_kill');
     },
