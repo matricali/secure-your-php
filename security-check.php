@@ -68,6 +68,12 @@ $security_checks = array(
         }
         return ini_get('safe_mode');
     },
+    'PHP Information leakage (Version)' => function () {
+        return empty(ini_get('expose_php'));
+    },
+    'PHP Information leakage (Logs)' => function () {
+        return ini_get('display_errors') == 1;
+    },
     'Can view /etc/passwd' => function () {
         return !is_readable('/etc/passwd');
     },
